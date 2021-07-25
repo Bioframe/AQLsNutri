@@ -1,0 +1,12 @@
+--Exemplo de código AQL que representa a busca da DOR ABDOMINAL com sintoma associado, retornando todos os Códigos do SNOMED
+SELECT
+   o/data[at0004]/events[at0002]/data[at0005]/items[at0006]/value/magnitude,
+   o/data[at0004]/events[at0002]/data[at0005]/items[at0007]/value/magnitude
+]
+   EHR [ehr_id/value='AvaliacaoNutricional']
+    CONTAINS SECTION [openEHR-EHR-SECTION.AvaliacaoNutricional.v1]   
+        CONTAINS COMPOSITION [openEHR-EHR-COMPOSITION.SintomaGastrointestinal.v1]
+            CONTAINS OBSERVATION [openEHR-EHR-OBSERVATION.dor_abdominal.v1]
+WHERE
+    at0005/value='Sintoma Associado' AND at0006/value='SIM'
+    data/items/value/defining_code matches { terminology://snomed-ct/hierarchy?rootConceptId= * }
